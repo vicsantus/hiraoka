@@ -677,9 +677,9 @@
     }
 
     /* boton de añadir al carrito */
-    .catalog-product-view button#product-addtocart-button {
-      border-radius: 35px !important;
-    }
+    /* .catalog-product-view button#product-addtocart-button {
+      border-radius: tra; */
+    /* } */
 
     /*fin boton añadir al carrito*/
 
@@ -778,20 +778,20 @@
 
     .f-marcas-top .slick-dots li button {
       background: #fbfbff;
-      border: solid 1px #eeeff3;
+      border: transparent;
       width: 10px;
       height: 10px;
     }
 
     .f-marcas-top .slick-dots li.slick-active button {
       background: #ff0000;
-      border: solid 1px #ff0000;
+      border: transparent;
     }
 
-    .f-marcas-top .slick-dots li button:hover {
+    /* .f-marcas-top .slick-dots li button:hover {
       border: 1px solid #c0c0c0;
       background: #c0c0c0;
-    }
+    } */
 
     @media (max-width:768px) {
       .f-marcas-top .slick-dots li button {
@@ -4979,13 +4979,36 @@ window.addEventListener("load", function(event) {
                   data-video-loop="true" data-video-play-only-visible="true" data-video-lazy-load="true"
                   data-video-fallback-src="" data-element="main" data-pb-style="L9BMFBD">
                   <div class="carousel-container">
-                    <div class="block-title title mas_comprados" style="margin-top: 30px; margin-bottom: 60px;" if="sectionName">
+                    <div class="block-title title mas_comprados" style="margin-top: 30px; margin-bottom: 30px;"
+                      if="sectionName">
                       <strong><span class="block-related-heading" data-bind="text: sectionName">Más
                           comprados</span></strong>
                     </div>
+                    <div class="arrows_div">
+                      <button id="prevBtn" class="prev">
+                        <!-- &#11013; -->
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24">
+                          <path
+                            style="fill: grey"
+                            d="M12 2a10 10 0 1 0 10 10A10.011 10.011 0 0 0 12 2zm0 18a8 8 0 1 1 8-8 8.009 8.009 0 0 1-8 8z" />
+                          <path
+                            style="fill: grey"
+                            d="m12.707 8.707-1.414-1.414L6.586 12l4.707 4.707 1.414-1.414L10.414 13H16v-2h-5.586l2.293-2.293z" />
+                        </svg>
+                      </button>
+                      <button id="nextBtn" class="next">
+                        <!-- &#10145; -->
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24">
+                          <path
+                            style="fill: rgb(245, 84, 111);"
+                            d="M12 2a10 10 0 1 0 10 10A10.011 10.011 0 0 0 12 2zm0 18a8 8 0 1 1 8-8 8.009 8.009 0 0 1-8 8z" />
+                          <path
+                            style="fill: rgb(245, 84, 111);"
+                            d="M11.293 8.707 13.586 11H8v2h5.586l-2.293 2.293 1.414 1.414L17.414 12l-4.707-4.707-1.414 1.414z" />
+                        </svg>
+                      </button>
+                    </div>
                     <div id="carousel" class="carousel"></div>
-                    <button id="prevBtn" class="prev">&#10094;</button>
-                    <button id="nextBtn" class="next">&#10095;</button>
                   </div>
 
                   <script src="scripts/index.js" />
@@ -9512,14 +9535,14 @@ window.addEventListener("load", function(event) {
                   }
 
                   .marcas-footer-home ul.slick-dots li button {
-                    border: solid 1px #cbcbcb;
+                    border: transparent;
                     width: 10px;
                     height: 10px;
                   }
 
                   .marcas-footer-home .slick-dots li.slick-active button {
                     background: #ff0000;
-                    border: solid 1px #ff0000;
+                    border: transparent;
                   }
 
                   .marcas-footer-home .slick-slide.slick-current div[data-content-type="slide"] a .pagebuilder-slide-wrapper {

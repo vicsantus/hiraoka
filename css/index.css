@@ -1,6 +1,6 @@
 .carousel-container {
   position: relative;
-  width: 80%;
+  width: 1240px !important;
   margin: 0 auto;
   overflow: hidden;
 }
@@ -12,19 +12,16 @@
 
 .carousel-item {
   flex: 0 0 auto;
-  width: 300px;
+  width: 248px;
+  height: 398.25px;
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: center;
+  align-content: center;
 }
 
-.prev, .next {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  background-color: #333;
-  color: white;
-  border: none;
-  cursor: pointer;
-  padding: 10px;
-  z-index: 1;
+.span_carousel_img {
+  align-items: center;
 }
 
 .carousel_prod_img {
@@ -34,10 +31,51 @@
   max-height: 130px;
 }
 
+.carousel_prod_descr {
+  height: 60px;
+  width: 205px;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.arrows_div {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: end;
+  margin-bottom: 30px;
+}
+
+.prev, .next {
+  background-color: white !important;
+  background: white !important;
+  padding: 3px;
+  margin: 1px;
+  border: transparent !important;
+}
+
+.prev:hover {
+  left: 0;
+  color: gray;
+  background-color: white !important;
+  border: transparent !important;
+}
+
+.next:hover {
+  right: 0;
+  color: rgb(245, 84, 111);
+  background-color: white !important;
+  border: transparent !important;
+}
+
 .prev {
   left: 0;
+  color: gray;
 }
 
 .next {
   right: 0;
+  color: rgb(245, 84, 111);
 }
