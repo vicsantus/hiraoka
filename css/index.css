@@ -5,6 +5,16 @@
   overflow: hidden;
 }
 
+@media (max-width: 1024px) {
+  .carousel-container {
+    width: 100% !important;
+  }
+
+  .svg_arrow {
+    display: none;
+  }
+}
+
 .carousel {
   display: flex;
   transition: transform 0.5s ease;
@@ -15,9 +25,9 @@
   width: 248px;
   height: 398.25px;
   display: flex;
-  flex-flow: column nowrap;
+  flex-direction: column;
   align-items: center;
-  align-content: center;
+  /* padding: 3px */
 }
 
 .span_carousel_img {
@@ -31,6 +41,21 @@
   max-height: 130px;
 }
 
+.carousel_prod_title {
+  font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  color: #000;
+  display: block;
+  min-height: 18px;
+  height: 20px;
+  overflow: hidden;
+}
+
 .carousel_prod_descr {
   height: 60px;
   width: 205px;
@@ -39,6 +64,15 @@
   -webkit-line-clamp: 3;
   overflow: hidden;
   text-overflow: ellipsis;
+  color: #333;
+  text-decoration: none;
+  font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: normal;
 }
 
 .arrows_div {
@@ -78,4 +112,21 @@
 .next {
   right: 0;
   color: rgb(245, 84, 111);
+}
+
+#product-addtocart-button {
+  border: none;
+  border-radius: 50px;
+  padding: 10px 20px;
+  width: 190px;
+  margin-top: 9px;
+  font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  text-align: center;
+  color: #fff;
 }
