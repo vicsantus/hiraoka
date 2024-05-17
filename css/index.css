@@ -18,6 +18,8 @@
 .carousel {
   display: flex;
   transition: transform 0.5s ease;
+  /* -ms-flex-order: 4;
+  -webkit-order: 3; */
 }
 
 .carousel-item {

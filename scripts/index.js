@@ -3,39 +3,59 @@ document.addEventListener('DOMContentLoaded', () => {
   const prevBtn = document.getElementById('prevBtn');
   const nextBtn = document.getElementById('nextBtn');
 
-  let pos = 0;
+  let currentIndex = 0;
   const itemMaxWidth = 248;
+  const transitionTime = 0.5;
 
+  function updateCarousel(isMobile) {
+    const items = Array.from(carousel.children);
 
+    items.forEach((item, index) => {
+      const cur = ((index - currentIndex + items.length) % items.length);
+      item.style.marginLeft = cur === 0 ? "1px" : "0px";
+      item.style.order = cur;
+      // item.style.webkitOrder = cur + 1;
+      // item.style.setProperty("-webkit-order", cur - 4);
+    });
 
-  function moveCarousel() {
-    carousel.style.transform = `translateX(-${pos}px)`;
+    if (isMobile) {
+      setTimeout(() => {
+        carousel.style.transition = 'none';
+        carousel.style.transform = `translateX(0)`;
+      }, 50);
+      return;
+    }
+
+    carousel.style.transition = 'none';
+    carousel.style.transform = `translateX(0)`;
+  }
+
+  function moveToIndex(index, isMobile = false) {
+    const itemsCount = carousel.children.length;
+    const direction = index > currentIndex ? 1 : -1;
+    const itemsToMove = Math.abs(index - currentIndex);
+
+    carousel.style.transition = `transform ${transitionTime}s ease`;
+    carousel.style.transform = `translateX(${-direction * itemMaxWidth * itemsToMove}px)`;
+
+    if (isMobile) {
+      currentIndex = (index + itemsCount) % itemsCount;
+      updateCarousel(isMobile);
+      return;
+    }
+
+    setTimeout(() => {
+      currentIndex = (index + itemsCount) % itemsCount;
+      updateCarousel();
+    }, transitionTime * 1000);
   }
 
   nextBtn.addEventListener('click', () => {
-    const containerWidth = document.querySelector('.carousel-container').offsetWidth;
-    const itemsPerPage = Math.floor(containerWidth / itemMaxWidth);
-    const itemsCount = carousel.children.length;
-    const maxPosition = (itemsCount - itemsPerPage) * itemMaxWidth;
-    if (pos <= maxPosition) {
-      pos += itemMaxWidth;
-      moveCarousel();
-    }
-    if (pos > maxPosition) {
-      pos = 0;
-      moveCarousel();
-    }
+    moveToIndex(currentIndex + 1);
   });
 
   prevBtn.addEventListener('click', () => {
-    if (pos >= 0) {
-      pos -= itemMaxWidth;
-      moveCarousel();
-    }
-    if (pos < 0) {
-      pos = (itemMaxWidth * carousel.children.length) - (itemMaxWidth * 5);
-      moveCarousel();
-    }
+    moveToIndex(currentIndex - 1);
   });
 
   let startX = 0;
@@ -44,7 +64,7 @@ document.addEventListener('DOMContentLoaded', () => {
   let animationID = 0;
 
   const setPositionByIndex = () => {
-    currentTranslate = pos * -itemMaxWidth;
+    currentTranslate = 0;
     prevTranslate = currentTranslate;
     setSliderPosition();
   };
@@ -59,27 +79,19 @@ document.addEventListener('DOMContentLoaded', () => {
   const touchMove = (_) => (event) => {
     const currentPosition = getPositionX(event);
     currentTranslate = prevTranslate + currentPosition - startX;
+    setSliderPosition();
   };
 
   const touchEnd = () => {
     cancelAnimationFrame(animationID);
     const movedBy = currentTranslate - prevTranslate;
-    // alert(`${movedBy} movedby; ${pos} pos;`)
 
-    if (movedBy < -100 && pos < carousel.childElementCount - 4) {
-      pos++;
+    if (movedBy < -100) {
+      moveToIndex(currentIndex + 1, true);
     }
 
-    if (movedBy < -100 && pos >= carousel.childElementCount - 4) {
-      pos = 0;
-    }
-
-    if (movedBy > 100 && pos > 0) {
-      pos--;
-    }
-
-    if (movedBy > 100 && pos <= 0) {
-      pos = carousel.childElementCount - 4;
+    if (movedBy > 100) {
+      moveToIndex(currentIndex - 1, true);
     }
 
     setPositionByIndex();
@@ -109,29 +121,28 @@ document.addEventListener('DOMContentLoaded', () => {
       item.classList.add('carousel-item');
       item.style.marginLeft = idx === 0 ? `1px` : `0`;
       item.innerHTML = `
-              <span class="span_carousel_img" style="width: 205px; height: 256.25px; display: flex; justify-content: center; align-content: center;">
-                  <img class="carousel_prod_img" loading="lazy" src="${product.image}" alt="${product.title}">
-              </span>
-              <div style="width: 205px; height: 138px">
-                  <strong class="carousel_prod_title">${product.title}</strong>
-                  <p class="carousel_prod_descr">${product.description}</p>
-                  <strong style="font-size: 19px; font-weight: 700;">S/ ${Number(product.price).toFixed(2)}</strong>
-              </div>
-              <button type="button" title="Añadir al carro" class="action primary tocart" id="product-addtocart-button">
-                  <span>Añadir al carro</span>
-              </button>
-          `;
+        <span class="span_carousel_img" style="width: 205px; height: 256.25px; display: flex; justify-content: center; align-content: center;">
+          <img class="carousel_prod_img" loading="lazy" src="${product.image}" alt="${product.title}">
+        </span>
+        <div style="width: 205px; height: 138px">
+          <strong class="carousel_prod_title">${product.title}</strong>
+          <p class="carousel_prod_descr">${product.description}</p>
+          <strong style="font-size: 19px; font-weight: 700;">S/ ${Number(product.price).toFixed(2)}</strong>
+        </div>
+        <button type="button" title="Añadir al carro" class="action primary tocart" id="product-addtocart-button">
+          <span>Añadir al carro</span>
+        </button>
+      `;
       carousel.appendChild(item);
     });
-    // alert(`${carousel.childElementCount} carousel.length`)
 
     if (window.innerWidth <= 1024) {
-      // alert("ENTRASSE AQUI!!")
       carousel.querySelectorAll('.carousel-item').forEach((item, index) => {
         const itemContent = item;
         itemContent.addEventListener('touchstart', touchStart(index));
       });
     }
+    updateCarousel();
   }
 
   fetch('https://fakestoreapi.com/products')
