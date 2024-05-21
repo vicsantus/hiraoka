@@ -2,27 +2,63 @@ document.addEventListener('DOMContentLoaded', () => {
   const carousel = document.getElementById('carousel');
   const prevBtn = document.getElementById('prevBtn');
   const nextBtn = document.getElementById('nextBtn');
+  const dotsContainer = document.querySelector('.dots-container');
 
   let currentIndex = 0;
   const itemMaxWidth = 248;
   const transitionTime = 0.5;
 
-  function updateCarousel(isMobile) {
+  function createDots(itemsCount) {
+    dotsContainer.innerHTML = '';
+    for (let i = 0; i < itemsCount; i++) {
+      const dot = document.createElement('div');
+      dot.classList.add('dot');
+      if (i === 0) dot.classList.add('active');
+      dot.addEventListener('click', () => moveToIndex(i, window.innerWidth <= 1024));
+      dotsContainer.appendChild(dot);
+    }
+  }
+
+  function updateDots() {
+    const dots = Array.from(dotsContainer.children);
+    dots.forEach((dot, index) => {
+      dot.classList.toggle('active', index === currentIndex);
+    });
+  }
+
+  function updateCarousel(isMobile = false) {
     const items = Array.from(carousel.children);
 
     items.forEach((item, index) => {
       const cur = ((index - currentIndex + items.length) % items.length);
       item.style.marginLeft = cur === 0 ? "1px" : "0px";
       item.style.order = cur;
-      // item.style.webkitOrder = cur + 1;
-      // item.style.setProperty("-webkit-order", cur - 4);
+      item.style.transform = `translateX(0px)`;
+      if ((items.length - 1) === cur) {
+        item.style.transform = `translateX(-${((cur - 1) * itemMaxWidth) + itemMaxWidth + itemMaxWidth}px)`;
+      }
+      if ((items.length - 2) === cur) {
+        item.style.transform = `translateX(-${((cur - 1) * itemMaxWidth) + itemMaxWidth + itemMaxWidth + itemMaxWidth}px)`;
+      }
+      if ((items.length - 3) === cur && isMobile) {
+        item.style.transform = `translateX(-${((cur - 1) * itemMaxWidth) + itemMaxWidth + itemMaxWidth + itemMaxWidth + itemMaxWidth}px)`;
+      }
+      if ((items.length - 4) === cur && isMobile) {
+        item.style.transform = `translateX(-${((cur - 1)
+          * itemMaxWidth)
+          + itemMaxWidth
+          + itemMaxWidth
+          + itemMaxWidth
+          + itemMaxWidth
+          + itemMaxWidth}px)`;
+      }
     });
 
     if (isMobile) {
       setTimeout(() => {
         carousel.style.transition = 'none';
         carousel.style.transform = `translateX(0)`;
-      }, 50);
+      }, 500);
       return;
     }
 
@@ -33,21 +69,21 @@ document.addEventListener('DOMContentLoaded', () => {
   function moveToIndex(index, isMobile = false) {
     const itemsCount = carousel.children.length;
     const direction = index > currentIndex ? 1 : -1;
-    const itemsToMove = Math.abs(index - currentIndex);
 
     carousel.style.transition = `transform ${transitionTime}s ease`;
-    carousel.style.transform = `translateX(${-direction * itemMaxWidth * itemsToMove}px)`;
+    carousel.style.transform = `translateX(${-direction * itemMaxWidth}px)`;
 
-    if (isMobile) {
-      currentIndex = (index + itemsCount) % itemsCount;
-      updateCarousel(isMobile);
+    if (!isMobile) {
+      setTimeout(() => {
+        currentIndex = (index + itemsCount) % itemsCount;
+        updateCarousel(isMobile);
+        updateDots();
+      }, transitionTime * 1000);
       return;
     }
-
-    setTimeout(() => {
-      currentIndex = (index + itemsCount) % itemsCount;
-      updateCarousel();
-    }, transitionTime * 1000);
+    currentIndex = (index + itemsCount) % itemsCount;
+    updateCarousel(isMobile);
+    updateDots();
   }
 
   nextBtn.addEventListener('click', () => {
@@ -63,10 +99,9 @@ document.addEventListener('DOMContentLoaded', () => {
   let prevTranslate = 0;
   let animationID = 0;
 
-  const setPositionByIndex = () => {
+  const setPositionByIndex = (idx) => {
     currentTranslate = 0;
-    prevTranslate = currentTranslate;
-    setSliderPosition();
+    setSliderPosition(true, idx > 0 ? itemMaxWidth : itemMaxWidth * -1);
   };
 
   const touchStart = (index) => (event) => {
@@ -79,22 +114,24 @@ document.addEventListener('DOMContentLoaded', () => {
   const touchMove = (_) => (event) => {
     const currentPosition = getPositionX(event);
     currentTranslate = prevTranslate + currentPosition - startX;
-    setSliderPosition();
+    // setSliderPosition();
   };
 
   const touchEnd = () => {
     cancelAnimationFrame(animationID);
+    animationID = 0;
     const movedBy = currentTranslate - prevTranslate;
+    let idx;
 
     if (movedBy < -100) {
-      moveToIndex(currentIndex + 1, true);
+      idx = currentIndex + 1;
     }
 
     if (movedBy > 100) {
-      moveToIndex(currentIndex - 1, true);
+      idx = currentIndex - 1;
     }
-
-    setPositionByIndex();
+    setPositionByIndex(idx);
+    moveToIndex(idx, true);
 
     carousel.removeEventListener('touchmove', touchMove);
     carousel.removeEventListener('touchend', touchEnd);
@@ -111,7 +148,12 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   };
 
-  const setSliderPosition = () => {
+  const setSliderPosition = (to = false, moveTo = null) => {
+    if (to) {
+      // alert(moveTo)
+      carousel.style.transform = `translateX(${moveTo}px)`;
+      return;
+    }
     carousel.style.transform = `translateX(${currentTranslate}px)`;
   };
 
@@ -142,7 +184,9 @@ document.addEventListener('DOMContentLoaded', () => {
         itemContent.addEventListener('touchstart', touchStart(index));
       });
     }
-    updateCarousel();
+
+    createDots(products.length);
+    updateCarousel(window.innerWidth <= 1024);
   }
 
   fetch('https://fakestoreapi.com/products')
