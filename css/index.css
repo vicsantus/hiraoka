@@ -13,11 +13,36 @@
   .svg_arrow {
     display: none;
   }
+
+  .dots-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 10px;
+  }
+
+  .dot {
+    width: 10px;
+    height: 10px;
+    margin: 0 5px;
+    background: #fbfbff;
+    border: solid 1px #cacaca;
+    border-radius: 50%;
+    display: inline-block;
+    transition: background-color 300ms ease;
+  }
+
+  .dot.active {
+    border: solid 1px #ff0000;
+    background-color: #ff0000;
+  }
 }
 
 .carousel {
   display: flex;
   transition: transform 0.5s ease;
+  /* -ms-flex-order: 4;
+  -webkit-order: 3; */
 }
 
 .carousel-item {
