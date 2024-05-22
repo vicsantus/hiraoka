@@ -22,35 +22,30 @@ document.addEventListener('DOMContentLoaded', () => {
   function updateDots() {
     const dots = Array.from(dotsContainer.children);
     dots.forEach((dot, index) => {
-      dot.classList.toggle('active', index === currentIndex);
+      if (!isNaN(currentIndex)) dot.classList.toggle('active', index === currentIndex);
     });
   }
 
   function updateCarousel(isMobile = false) {
     const items = Array.from(carousel.children);
+    const lenghtItems = items.length;
 
     items.forEach((item, index) => {
-      const cur = ((index - currentIndex + items.length) % items.length);
+      const cur = ((index - currentIndex + lenghtItems) % lenghtItems);
       item.style.marginLeft = cur === 0 ? "1px" : "0px";
       item.style.order = cur;
       item.style.transform = `translateX(0px)`;
-      if ((items.length - 1) === cur) {
-        item.style.transform = `translateX(-${((cur - 1) * itemMaxWidth) + itemMaxWidth + itemMaxWidth}px)`;
+      if ((lenghtItems - 1) === cur) {
+        item.style.transform = `translateX(-${lenghtItems}00%)`;
       }
-      if ((items.length - 2) === cur) {
-        item.style.transform = `translateX(-${((cur - 1) * itemMaxWidth) + itemMaxWidth + itemMaxWidth + itemMaxWidth}px)`;
+      if ((lenghtItems - 2) === cur) {
+        item.style.transform = `translateX(-${lenghtItems}05%)`;
       }
-      if ((items.length - 3) === cur && isMobile) {
-        item.style.transform = `translateX(-${((cur - 1) * itemMaxWidth) + itemMaxWidth + itemMaxWidth + itemMaxWidth + itemMaxWidth}px)`;
+      if ((lenghtItems - 3) === cur && isMobile) {
+        item.style.transform = `translateX(-${lenghtItems}10%)`;
       }
-      if ((items.length - 4) === cur && isMobile) {
-        item.style.transform = `translateX(-${((cur - 1)
-          * itemMaxWidth)
-          + itemMaxWidth
-          + itemMaxWidth
-          + itemMaxWidth
-          + itemMaxWidth
-          + itemMaxWidth}px)`;
+      if ((lenghtItems - 4) === cur && isMobile) {
+        item.style.transform = `translateX(-${lenghtItems}15%)`;
       }
     });
 
@@ -78,7 +73,7 @@ document.addEventListener('DOMContentLoaded', () => {
         currentIndex = (index + itemsCount) % itemsCount;
         updateCarousel(isMobile);
         updateDots();
-      }, transitionTime * 1000);
+      }, transitionTime * 1500);
       return;
     }
     currentIndex = (index + itemsCount) % itemsCount;
@@ -125,13 +120,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (movedBy < -100) {
       idx = currentIndex + 1;
+      setPositionByIndex(idx);
+      moveToIndex(idx, true);
     }
 
     if (movedBy > 100) {
       idx = currentIndex - 1;
+      setPositionByIndex(idx);
+      moveToIndex(idx, true);
     }
-    setPositionByIndex(idx);
-    moveToIndex(idx, true);
+    if ((movedBy > 0 && movedBy < 100) || (movedBy < 0 && movedBy > -100)) setPositionByIndex();
 
     carousel.removeEventListener('touchmove', touchMove);
     carousel.removeEventListener('touchend', touchEnd);
@@ -188,6 +186,12 @@ document.addEventListener('DOMContentLoaded', () => {
     createDots(products.length);
     updateCarousel(window.innerWidth <= 1024);
   }
+
+  document.addEventListener('visibilitychange', () => {
+    // if (!document.hidden) {
+      updateDots();
+    // }
+  });
 
   fetch('https://fakestoreapi.com/products')
     .then(response => response.json())
