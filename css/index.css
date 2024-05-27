@@ -5,6 +5,26 @@
   overflow: hidden;
 }
 
+span.block-related-heading {
+  font-size: 23px !important;
+  font-weight: bold !important;
+  margin: 30px 0 20px;
+  text-align: center;
+}
+
+.block-title.title {
+  text-align: center !important;
+}
+
+.block-title.title span {
+  font-size: 24px !important;
+  font-weight: 700 !important;
+}
+
+.block-title.title {
+  text-align: center !important;
+}
+
 @media (max-width: 1024px) {
   .carousel-container {
     width: 100% !important;
@@ -18,21 +38,27 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-top: 10px;
+    /* margin-top: 10px; */
+    height: 30px !important;
+    /* margin-bottom: 20px; */
   }
 
-  .dot {
+  .dots-container .slick-dots {
+    bottom: 0;
+  }
+
+  .dots-container .slick-dots li button {
     width: 10px;
     height: 10px;
-    margin: 0 5px;
+    /* margin: 0 5px; */
     background: #fbfbff;
     border: solid 1px #cacaca;
     border-radius: 50%;
-    display: inline-block;
+    /* display: inline-block; */
     transition: background-color 300ms ease;
   }
 
-  .dot.active {
+  .dots-container .slick-dots .slick-active button {
     border: solid 1px #ff0000;
     background-color: #ff0000;
   }
@@ -49,7 +75,7 @@
   flex: 0 0 auto;
   width: 248px;
   height: 398.25px;
-  display: flex;
+  display: flex !important;
   flex-direction: column;
   align-items: center;
   /* padding: 3px */
@@ -104,7 +130,7 @@
   display: flex;
   flex-flow: row nowrap;
   justify-content: end;
-  margin-bottom: 30px;
+  /* margin-bottom: 30px; */
 }
 
 .prev, .next {
@@ -139,11 +165,12 @@
   color: rgb(245, 84, 111);
 }
 
-#product-addtocart-button {
+.product-addtocart-button {
   border: none;
   border-radius: 50px;
   padding: 10px 20px;
-  width: 190px;
+  width: 100%;
+  max-width: 190px;
   margin-top: 9px;
   font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
   font-size: 14px;
@@ -154,4 +181,10 @@
   letter-spacing: normal;
   text-align: center;
   color: #fff;
+  height: 39px !important;
+  background: #f61411;
+}
+
+.arrows_div .slick-prev, .arrows_div .slick-arrow {
+  display: none !important;
 }

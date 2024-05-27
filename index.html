@@ -18,6 +18,12 @@
   <meta name="format-detection" content="telephone=no" />
   <title>▷ Hiraoka | Grandes ofertas AQUÍ | 100% garantía y calidad</title>
   <link rel="stylesheet" type="text/css" media="all" href="css/index.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.min.css"
+    integrity="sha512-yHknP1/AwR+yx26cB1y0cjvQUMvEa2PFzt1c9LlS4pRQ5NOTZFWbhBig+X9G9eYW/8m0/4OXNx8pxJ6z57x0dw=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick-theme.min.css"
+    integrity="sha512-17EgCFERpgZKcm0j0fEq1YCJuyAWdz9KUtv1EjVuaOz8pDnh/0nZxmU6BBXwaaxqoi9PQXnRWqlcDB027hgv9A=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
   <link rel="stylesheet" type="text/css" media="all"
     href="https://mcstaging.hiraoka.com.pe/static/version1715344951/frontend/Xpectrum/hiraokacore/es_PE/mage/calendar.min.css" />
   <link rel="stylesheet" type="text/css" media="all"
@@ -1568,27 +1574,23 @@ window.addEventListener("load", function(event) {
                   <span>Buscar</span>
                 </label>
                 <div class="control">
-                  <input id="search" data-mage-init='{"quickSearch":{
-                                "formSelector":"#search_mini_form",
-                                "url":"https://mcstaging.hiraoka.com.pe/search/ajax/suggest/",
-                                "destinationSelector":"#search_autocomplete",
-                                "minSearchLength":"2",
-                                "showSuggestionsCount": ""}
-                           }' type="text" name="q" value=""
-                    placeholder="Busca&#x20;tu&#x20;producto&#x20;o&#x20;marca&#x20;preferida" class="input-text"
-                    maxlength="128" role="combobox" aria-haspopup="false" aria-autocomplete="both" autocomplete="off"
-                    aria-expanded="false" />
-                  <div id="search_autocomplete" class="search-autocomplete"></div>
+                  <div style="display: flex; align-items: center; width: 100%;"><input id="search" type="text" name="q"
+                      value="" placeholder="Busca tu producto o marca preferida" class="input-text" maxlength="128"
+                      role="combobox" aria-haspopup="false" aria-autocomplete="both" autocomplete="off"
+                      aria-expanded="true"></div>
+                  <div id="search_autocomplete" class="search-autocomplete" style="display: block;">
+                  </div>
                 </div>
               </div>
               <div class="actions">
-                <button type="submit" title="Buscar" class="action search" aria-label="Search">
-                  <span>Buscar</span>
-                </button>
+
               </div>
+              <input type="hidden" name="cache_key" value="1716813453302">
             </form>
           </div>
         </div>
+        <script src="./scripts/search-bar.js" />
+
       </div>
     </header>
     <div class="sections nav-sections">
@@ -4979,8 +4981,7 @@ window.addEventListener("load", function(event) {
                   data-video-loop="true" data-video-play-only-visible="true" data-video-lazy-load="true"
                   data-video-fallback-src="" data-element="main" data-pb-style="L9BMFBD">
                   <div class="carousel-container">
-                    <div class="block-title title mas_comprados" style="margin-top: 30px; margin-bottom: 30px;"
-                      if="sectionName">
+                    <div class="block-title title mas_comprados" style="margin-top: 30px;" if="sectionName">
                       <strong><span class="block-related-heading" data-bind="text: sectionName">Más
                           comprados</span></strong>
                     </div>
@@ -4988,22 +4989,18 @@ window.addEventListener("load", function(event) {
                       <button id="prevBtn" class="prev">
                         <!-- &#11013; -->
                         <svg class="svg_arrow" xmlns="http://www.w3.org/2000/svg" width="24" height="24">
-                          <path
-                            style="fill: grey"
+                          <path style="fill: grey"
                             d="M12 2a10 10 0 1 0 10 10A10.011 10.011 0 0 0 12 2zm0 18a8 8 0 1 1 8-8 8.009 8.009 0 0 1-8 8z" />
-                          <path
-                            style="fill: grey"
+                          <path style="fill: grey"
                             d="m12.707 8.707-1.414-1.414L6.586 12l4.707 4.707 1.414-1.414L10.414 13H16v-2h-5.586l2.293-2.293z" />
                         </svg>
                       </button>
                       <button id="nextBtn" class="next">
                         <!-- &#10145; -->
                         <svg class="svg_arrow" xmlns="http://www.w3.org/2000/svg" width="24" height="24">
-                          <path
-                            style="fill: rgb(245, 84, 111);"
+                          <path style="fill: rgb(245, 84, 111);"
                             d="M12 2a10 10 0 1 0 10 10A10.011 10.011 0 0 0 12 2zm0 18a8 8 0 1 1 8-8 8.009 8.009 0 0 1-8 8z" />
-                          <path
-                            style="fill: rgb(245, 84, 111);"
+                          <path style="fill: rgb(245, 84, 111);"
                             d="M11.293 8.707 13.586 11H8v2h5.586l-2.293 2.293 1.414 1.414L17.414 12l-4.707-4.707-1.414 1.414z" />
                         </svg>
                       </button>
@@ -5012,6 +5009,12 @@ window.addEventListener("load", function(event) {
                     <div class="dots-container"></div>
                   </div>
 
+                  <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.js"
+                    integrity="sha512-eP8DK17a+MOcKHXC5Yrqzd8WI5WKh6F1TIk5QZ/8Lbv+8ssblcz7oGC8ZmQ/ZSAPa7ZmsCU4e/hcovqR8jfJqA=="
+                    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+                  <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.min.js"
+                    integrity="sha512-HGOnQO9+SP1V92SrtZfjqxxtLmVzqZpjFFekvzZVWoiASSQgSr4cw9Kqd2+l8Llp4Gm0G8GIFJ4ddwZilcdb8A=="
+                    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
                   <script src="scripts/index.js" />
                   <!--
                     <div class="pagebuilder-slider hiraoka-main-slider" data-content-type="slider"
